@@ -162,13 +162,13 @@ O Gateway é responsável por:
 
 ### Rotas previstas
 
-/api/usuarios/**  -> usuario-service
+/usuarios/**  -> usuario-service
 
-/api/jogos/**     -> jogo-service
+/jogos/**     -> jogo-service
 
-/api/compras/**   -> compra-service
+/compras/**   -> compra-service
 
-/api/historico/** -> historico-service
+/historico/** -> historico-service
 
 ---
 
@@ -182,15 +182,11 @@ O serviço de histórico pode estar indisponível ou responder lentamente.
 
 ### Solução
 
-Implementação de:
-1. Circuit Breaker
-2. Fallback
+Implementação de Fallback para indisponibilidade do historico-service.
 
 ### Comportamento esperado
 
-Mesmo que o historico-service esteja indisponível, a compra deverá ser concluída normalmente.
-
-Nesse cenário, o sistema registra uma resposta alternativa informando que o histórico será processado posteriormente, evitando falhas em cascata.
+Foi implementado um mecanismo de tolerância a falhas entre o compra-service e o historico-service. Caso o serviço de histórico esteja indisponível, a compra continua sendo processada normalmente e uma rotina de fallback é executada, evitando falhas em cascata.
 
 ---
 
