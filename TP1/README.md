@@ -233,3 +233,38 @@ flowchart LR
     CS --> DBC
     HS --> DBH
 ```
+
+---
+
+## Evidências
+
+---
+
+### Eureka com todos os serviços em funcionamento
+<img src="./Screenshots/Eureka Server.png">
+
+---
+
+### Gateway em funcionamento
+
+<img src="./Screenshots/Gateway1.png">
+<img src="./Screenshots/Gateway2.png">
+
+---
+
+### Histórico funcionando
+
+<img src="./Screenshots/Historico.png">
+
+---
+
+### POST /compras funcionando
+
+<img src="./Screenshots/Compras.png">
+
+---
+
+### historico-service com falha/desligado, mas compras funcionando normalmente
+
+<img src="./Screenshots/Falha Historico1.png">
+<img src="./Screenshots/Falha Historico2.png">
