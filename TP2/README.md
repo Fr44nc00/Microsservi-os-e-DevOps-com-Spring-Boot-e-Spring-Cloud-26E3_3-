@@ -86,3 +86,85 @@ R: Containers são interessantes para microsserviços porque permitem leveza, es
 | Consumo de recursos  | Alto: precisa de memória e CPU para rodar o sistema operacional inteiro.         | Baixo: utiliza apenas o necessário para o processo e bibliotecas.         |
 | Inicialização        | Lenta: precisa inicializar todo o sistema operacional.                          | Rápida: inicia em segundos, pois só carrega o processo e dependências.    |
 | Isolamento           | Forte: cada VM é totalmente isolada, com seu próprio OS e kernel.               | Moderado: isolamento a nível de processo, mas compartilham o mesmo kernel.|
+
+---
+
+## Componentes Docker
+### Dockerfile
+É o arquivo de instruções que define como construir a imagem.
+
+Nesse projeto, cada microsserviço (product-service e order-service) tem um Dockerfile que:
+
+1. Usa uma imagem base (Java + Maven).
+2. Copia o código-fonte.
+3. Compila e gera o .jar.
+4. Define o comando de inicialização (java -jar app.jar).
+
+Exemplo: o Dockerfile do product-service gera a imagem product-image.
+
+---
+
+### Image (Imagem)
+É o resultado do Dockerfile: um pacote imutável com tudo que a aplicação precisa (código, dependências, runtime).
+
+Nesse projeto:
+
+1. product-image contém o microsserviço de produtos.
+2. order-image contém o microsserviço de pedidos.
+
+A imagem é como uma “fotografia” da aplicação pronta para ser executada.
+
+---
+
+### Container
+É a instância em execução de uma imagem.
+
+Nesse projeto:
+
+1. product-container é o container rodando a imagem product-image.
+2. order-container é o container rodando a imagem order-image.
+
+O container é como “dar vida” à imagem, permitindo que ela rode e responda aos endpoints.
+
+---
+
+### Docker Engine
+É o motor do Docker, responsável por criar e executar containers.
+
+No Windows, o Docker Desktop com WSL2 é usado como backend.
+
+Ele interpreta os comandos (docker build, docker run) e gerencia imagens, containers, redes e volumes.
+
+---
+
+### Port Mapping (Mapeamento de Portas)
+Permite acessar o serviço dentro do container a partir do host.
+
+Sintaxe: -p <porta_host>:<porta_container>
+
+Nesse projeto:
+
+1. -p 8080:8080 → acessa o product-service em http://localhost:8080.
+2. -p 8081:8081 → acessa o order-service em http://localhost:8081.
+
+Sem o mapeamento, os serviços ficariam isolados dentro do container.
+
+---
+
+### Network (Rede)
+É o recurso que permite comunicação entre containers.
+
+Por padrão, containers podem se comunicar pela rede bridge.
+
+Nesse projeto, se o order-service precisar chamar o product-service, eles podem se conectar pela rede Docker (ex.: http://product-container:8080).
+
+---
+
+## Diferença entre Imagem e Container
+Imagem: é o pacote imutável, pronto para ser usado, mas parado (não executa nada sozinho).
+Container: é a execução da imagem, um processo ativo que responde a requisições.
+
+Nesse projeto:
+
+1. product-image é a receita.
+2. product-container é o prato servido na mesa.
