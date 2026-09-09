@@ -195,6 +195,31 @@ docker run -d --name order-service --network loja-network -p 8081:8081 order-ima
 <img src="./Screenshots/Evidencia1.png">
 <img src="./Screenshots/Evidencia2.png">
 
+---
+
 ### Teste de comunicação
 
 <img src="./Screenshots/Evidencia3.png">
+
+---
+
+## Docker X Kubernetes
+
+| Docker | Kubernetes |
+| --- | --- |
+| Container | **Pod** – unidade básica de execução, pode conter um ou mais containers. |
+| Network | **Service + Cluster Networking** – abstrai a comunicação entre Pods. |
+| Port Mapping | **Service (NodePort/LoadBalancer)** – expõe portas para acesso externo. |
+| Serviço da aplicação | **Deployment + Service** – Deployment gerencia réplicas, Service expõe. |
+| Múltiplos containers | **Pod com múltiplos containers** ou múltiplos Deployments em um namespace. |
+
+### Explicação:
+
+1. Container → Pod: no Kubernetes, o Pod é a menor unidade, e dentro dele roda o container.
+2. Network → Service: o Kubernetes cria uma rede interna e usa objetos Service para permitir que Pods se comuniquem.
+3. Port Mapping → NodePort/LoadBalancer: expõe portas para fora do cluster, similar ao -p do Docker.
+4. Serviço da aplicação → Deployment + Service: o Deployment garante que sempre haja a quantidade desejada de réplicas, e o Service expõe o acesso.
+5. Múltiplos containers → Pod com sidecars ou múltiplos Deployments: você pode ter vários containers dentro de um Pod ou vários Pods organizados em um namespace.
+
+### Por que uma aplicação que funciona com Docker não precisa ser completamente reescrita para funcionar no Kubernetes?
+Porque o Kubernetes utiliza os mesmos containers Docker como base. A aplicação já empacotada em imagens Docker continua válida; o que muda é apenas a forma de orquestrar, escalar e expor os containers. Ou seja, não é necessário reescrever o código, apenas criar os manifestos YAML (Deployment, Service, etc.) para que o Kubernetes gerencie os containers.
