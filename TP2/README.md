@@ -223,3 +223,53 @@ docker run -d --name order-service --network loja-network -p 8081:8081 order-ima
 
 ### Por que uma aplicação que funciona com Docker não precisa ser completamente reescrita para funcionar no Kubernetes?
 Porque o Kubernetes utiliza os mesmos containers Docker como base. A aplicação já empacotada em imagens Docker continua válida; o que muda é apenas a forma de orquestrar, escalar e expor os containers. Ou seja, não é necessário reescrever o código, apenas criar os manifestos YAML (Deployment, Service, etc.) para que o Kubernetes gerencie os containers.
+
+---
+
+## Comunicação entre microsserviços no Kubernetes
+
+### Primeiro se aplica os manifestos:
+
+kubectl apply -f order-deployment.yaml
+kubectl apply -f order-service.yaml
+
+### Depois se verifica se funcionam:
+
+kubectl get pods
+kubectl get services
+
+### Consultas
+
+POST em http://localhost:32370/orders
+GET em GET http://product-service:8080/products/10
+
+---
+
+## Evidência dos pods funcionando
+
+<img src="./Screenshots/Evidencia4.png">
+
+### a) Qual é a função do Service?  
+R: O Service atua como um ponto de entrada estável para acessar os Pods. Ele abstrai os IPs dinâmicos dos Pods e garante que a aplicação seja acessível por um nome fixo.
+
+### b) Por que podemos ter vários Pods do mesmo microsserviço?  
+R: Para garantir alta disponibilidade e escalabilidade. Se a demanda aumentar, múltiplos Pods permitem atender mais requisições em paralelo.
+
+### c) O que acontece se um dos Pods parar de funcionar?  
+R: O Deployment recria automaticamente o Pod falho, e o Service redireciona as requisições apenas para os Pods saudáveis.
+
+### d) Como o Service ajuda na distribuição das requisições?  
+R: O Service faz o load balancing interno, distribuindo as requisições entre os Pods disponíveis de forma transparente para o cliente.
+
+---
+
+## Avaliação
+
+### a) Qual foi a parte mais fácil e qual foi a parte mais difícil do trabalho? Explique.
+R: A parte mais fácil foi a conexão entre os dois microsserviços, já que já tinha experiência com essa parte. A mais difícil foi a conexão com o Kubernets e o Docker. Houve vários erros ao rodar o código e conectar o servidor durante o período de testes do TP.
+
+### b) Qual foi o principal aprendizado que você teve sobre Docker, containers e Kubernetes?
+R: Foi como transpor de uma forma pra outra. Ao longo do exercício, precisei aprender e reforçar como traduzir um código simples para Docker e depois para Kubernetes.
+
+### c) Dê uma nota de 0 a 10 para o seu desempenho no trabalho e explique o motivo da nota.
+R: Eu daria um 9, pois ainda não possuo 100% de proficiência na matéria. Mas estou satisfeito e orgulhoso do que consegui providenciar.
