@@ -230,18 +230,18 @@ Porque o Kubernetes utiliza os mesmos containers Docker como base. A aplicação
 
 ### Primeiro se aplica os manifestos:
 
-kubectl apply -f order-deployment.yaml
-kubectl apply -f order-service.yaml
+1. kubectl apply -f order-deployment.yaml
+2. kubectl apply -f order-service.yaml
 
 ### Depois se verifica se funcionam:
 
-kubectl get pods
-kubectl get services
+1. kubectl get pods
+2. kubectl get services
 
 ### Consultas
 
-POST em http://localhost:32370/orders
-GET em GET http://product-service:8080/products/10
+1. POST em http://localhost:32370/orders
+2. GET em GET http://product-service:8080/products/10
 
 ---
 
