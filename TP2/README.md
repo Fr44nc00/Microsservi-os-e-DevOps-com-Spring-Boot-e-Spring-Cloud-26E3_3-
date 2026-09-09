@@ -168,3 +168,33 @@ Nesse projeto:
 
 1. product-image é a receita.
 2. product-container é o prato servido na mesa.
+
+---
+
+## Comunicação entre microsserviços
+
+### Por que não usar localhost?
+Cada container tem seu próprio “localhost”.
+
+### Como eles se encontram?
+Pelo DNS interno do Docker, que resolve o nome product-service para o IP correto dentro da rede.
+
+### Comando utilizado
+docker network create loja-network
+
+### Containers conectados
+docker run -d --name product-service --network loja-network -p 8080:8080 product-image
+docker run -d --name order-service --network loja-network -p 8081:8081 order-image
+
+---
+
+## Evidências da comunicação entre microsserviços
+
+### Inspeção de rede:
+
+<img src="./Screenshots/Evidencia1.png">
+<img src="./Screenshots/Evidencia2.png">
+
+### Teste de comunicação
+
+<img src="./Screenshots/Evidencia3.png">
